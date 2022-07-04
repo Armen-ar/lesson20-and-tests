@@ -15,7 +15,7 @@ from ttools.skyprotests.tests import SkyproTestCase  # noqa: E402
 def error_check_summer(*args):
     for arg in args:
         if not isinstance(arg, int):
-            return "ОШБКА"
+            return "ОШИБКА"
 
 def sum_wrong_summer(*args):
     return sum(args) + 1

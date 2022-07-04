@@ -25,6 +25,9 @@
 #
 import os
 
+import pytest
+
+
 def summer(*args):
     if len(args) == 1:
         return "Мало аргументов"
@@ -35,12 +38,19 @@ def summer(*args):
         return "Большое число"
     return sum(args)
 
-summer_args = [] # TODO задайте здесь параметры для теста
+
+summer_args = [
+    [(3, 6, 9), 18],
+    [(299, 25), "Большое число"],
+    [(301,), "Мало аргументов"],
+    [("qwe", 1), "ОШИБКА"]
+]
 
 
+@pytest.mark.parametrize('test_input, expected', summer_args)
 def test_sum_numbers(test_input, expected):
-    # TODO Напишите код теста здесь, и не забудьте про декоратор!
-    pass
+    assert summer(*test_input) == expected
+
 
 if __name__ == "__main__":
     os.system("pytest")
