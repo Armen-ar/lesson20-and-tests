@@ -23,25 +23,28 @@
 #      в качестве аргумента, используйте пожалуйста список: 
 #      ["Санкт-Петербург", "Самара", "Краснодар"], это необходимо для проверки.
 #    - вызовите метод в теле функции show_cities и проверьте ожидаемый результат
+from unittest.mock import MagicMock
 
 import requests
 import os
+
 
 class AddressGetter:
     def get_cities(city):
         response = requests.get(f'https://give_me_address.com?search={city}')
         return response.data
-    
-    def show_cities(self):           # Необходимо протестировать этот метод
-        cities = self.get_cities()   # Здесь происходить вызов стороннего сервиса
+
+    def show_cities(self):  # Необходимо протестировать этот метод
+        cities = self.get_cities()  # Здесь происходить вызов стороннего сервиса
         cities = ", ".join(cities)
         return f"Расположение офисов: {cities}."
 
 
 def test_show_cities():
     addressgetter = AddressGetter()
-    # TODO Попробуйте мокнуть нужный метод здесь
+    addressgetter.get_cities = MagicMock(return_value=["Санкт-Петербург", "Самара", "Краснодар"])
     assert addressgetter.show_cities() == "Расположение офисов: Санкт-Петербург, Самара, Краснодар."
 
-if __name__=="__main__":
+
+if __name__ == "__main__":
     os.system("pytest")
